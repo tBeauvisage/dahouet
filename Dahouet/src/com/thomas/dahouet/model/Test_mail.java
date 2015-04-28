@@ -1,5 +1,6 @@
 package com.thomas.dahouet.model;
 
+import com.thomas.dahouet.GUI.Navire;
 import com.thomas.dahouet.utils.Affichage;
 import com.thomas.dahouet.utils.Controls;
 
@@ -10,6 +11,8 @@ public class Test_mail {
 		Affichage.afficheLicencie();
 		Affichage.afficheProprio();
 		Affichage.afficheCommissaire();
+		Navire navire = new Navire();
+		navire.setVisible(true);
 	}
 	
 
