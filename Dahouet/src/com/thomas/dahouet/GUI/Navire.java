@@ -23,6 +23,8 @@ public class Navire extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
 
 	
 	public Navire() {
@@ -33,14 +35,15 @@ public class Navire extends JFrame {
 		ImagePanel imagePanel = new ImagePanel(Toolkit.getDefaultToolkit().getImage(Navire.class.getResource("/ressources/assurance-voilier.jpg")));
 
 		getContentPane().add(imagePanel, "cell 0 0,grow");
-		imagePanel.setLayout(new MigLayout("", "[114px][][][][][][][][grow][][][][grow][][][][][][][][][][][grow]", "[20px][][][][][][][][][][][][][][][][][][][][]"));
+		imagePanel.setLayout(new MigLayout("", "[114px][][][][][][][][grow][][][][grow][grow][][][][][][][][][][grow]", "[20px][][][][][][][][][][][][][][][][][][][][]"));
 		
 		JLabel lblNomVoilier = new JLabel("Nom Voilier");
 		lblNomVoilier.setFont(new Font("Arial Black", Font.PLAIN, 13));
 		imagePanel.add(lblNomVoilier, "cell 0 1");
 		
-		JComboBox comboBox = new JComboBox();
-		imagePanel.add(comboBox, "cell 8 1 11 1,growx");
+		textField_1 = new JTextField();
+		imagePanel.add(textField_1, "cell 8 1 11 1,growx");
+		textField_1.setColumns(10);
 		
 		Component verticalStrut = Box.createVerticalStrut(20);
 		imagePanel.add(verticalStrut, "cell 9 2 1 2");
@@ -52,8 +55,9 @@ public class Navire extends JFrame {
 		lblNewLabel.setFont(new Font("Arial Black", Font.PLAIN, 13));
 		imagePanel.add(lblNewLabel, "cell 0 5 3 1");
 		
-		JComboBox comboBox_1 = new JComboBox();
-		imagePanel.add(comboBox_1, "cell 8 5 11 1,growx");
+		textField_2 = new JTextField();
+		imagePanel.add(textField_2, "cell 8 5 11 1,growx");
+		textField_2.setColumns(10);
 		
 		Component verticalStrut_2 = Box.createVerticalStrut(20);
 		imagePanel.add(verticalStrut_2, "cell 9 6");
