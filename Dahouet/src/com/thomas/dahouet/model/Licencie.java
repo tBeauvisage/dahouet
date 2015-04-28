@@ -1,25 +1,34 @@
 package com.thomas.dahouet.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Licencie extends Personne {
 
-	public Licencie(String nom, String mail, String prenom) {
-		super(nom, mail, prenom);
-		// TODO Auto-generated constructor stub
-	}
+	
 	 private int numeroLicence;
 	 private double pointsFFV;
 	 private Date dateNaissance;
 	 private int anneeLicence;
 	 
 	 
+	
+
 	public Licencie(String nom, String mail, String prenom, int numeroLicence, double pointsFFV, Date dateNaissance, int anneeLicence) {
 		super(nom, mail, prenom);
 		this.numeroLicence = numeroLicence;
 		this.pointsFFV = pointsFFV;
 		this.dateNaissance = dateNaissance;
 		this.anneeLicence = anneeLicence;
+	}
+	@Override
+	public String toString() {
+		DateFormat format = new SimpleDateFormat("yyyy/mm/dd");
+		
+		
+		return "Licencie " + nom+" "+prenom + ":\n\n"+ "-numeroLicence = " + numeroLicence + "\n-pointsFFV = " + pointsFFV + "\n-dateNaissance = " + format.format(dateNaissance)+ "\n-anneeLicence="
+				+ anneeLicence + "\n-mail = " + mail ;
 	}
 
 

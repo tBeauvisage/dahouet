@@ -36,6 +36,12 @@ public class Proprietaire extends Personne  {
 	public void setAdresse(String adresse) {
 		this.adresse = adresse;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Proprietaire "+ nom +" "+prenom+" :\n\n-telephone = " + telephone + "\n-adresse=" + adresse + "\n-mail=" + mail ;
+	}
 	
 	
 	

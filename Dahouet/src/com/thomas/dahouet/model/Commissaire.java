@@ -2,10 +2,6 @@ package com.thomas.dahouet.model;
 
 public class Commissaire extends Personne {
 
-	public Commissaire(String nom, String mail, String prenom) {
-		super(nom, mail, prenom);
-		// TODO Auto-generated constructor stub
-	}
 	
 	private String comite;
 
@@ -20,6 +16,11 @@ public class Commissaire extends Personne {
 
 	public void setComite(String comite) {
 		this.comite = comite;
+	}
+
+	@Override
+	public String toString() {
+		return "Commissaire "+nom+" "+prenom+ " :\n\n-comite=" + comite + "\n-mail=" + mail;
 	}
 	
 	
