@@ -7,7 +7,7 @@ import org.joda.time.Period;
 import com.thomas.dahouet.model.Licencie;
 
 public class Calcul {
-	public  int calculAge(Date dateNaissance) {
+	public static int calculAge(Date dateNaissance) {
 	     Date currentDate = new Date();
 	   if (dateNaissance.before(currentDate)) {
 	   

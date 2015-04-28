@@ -14,12 +14,12 @@ public class Affichage {
 	public static void afficheLicencie() {
 
 		SimpleDateFormat datnais = new SimpleDateFormat("yyyy/mm/dd");
-		  String birthday="1975/06/04";
+		  String birthday="1987/01/13";
 		  
 		  
 		  Licencie test=null;
 		  try {
-		   test = new Licencie("Crapaud", "Nanard@letetard.net", "Bernard", 1580, 230.8, datnais.parse(birthday), 2015);
+		   test = new Licencie("Kirigaya", "Kirito@aincrad.net", "Kazuto", 1580, 230.8, datnais.parse(birthday), 2015);
 		  } catch (ParseException e) {
 		   // TODO Auto-generated catch block
 		   e.printStackTrace();
