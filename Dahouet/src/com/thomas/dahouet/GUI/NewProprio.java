@@ -28,7 +28,7 @@ public class NewProprio extends JFrame{
 		setBounds(100, 100, 823, 578);
 		getContentPane().setLayout(new MigLayout("", "[grow]", "[grow]"));
 		
-		ImagePanel imagePanel = new ImagePanel(Toolkit.getDefaultToolkit().getImage(Navire.class.getResource("/ressources/assurance-voilier.jpg")));
+		ImagePanel imagePanel = new ImagePanel(Toolkit.getDefaultToolkit().getImage(NavireFrml.class.getResource("/ressources/assurance-voilier.jpg")));
 
 		getContentPane().add(imagePanel, "cell 0 0,grow");
 		imagePanel.setLayout(new MigLayout("", "[114px][][][][][][grow][][grow][][][][grow][][][][][][][][][][grow]", "[20px][][][][][][][][][][][][][][][][][][][][]"));

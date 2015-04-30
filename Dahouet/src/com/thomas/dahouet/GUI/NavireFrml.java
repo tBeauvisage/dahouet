@@ -1,22 +1,37 @@
 package com.thomas.dahouet.GUI;
 
+import com.thomas.dahouet.DAO.voilierDAO;
 import com.thomas.dahouet.GUI.ImagePanel;
+
+import javafx.scene.control.ComboBox;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import net.miginfocom.swing.MigLayout;
 
 import java.awt.Toolkit;
+
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+
 import java.awt.Component;
+
 import javax.swing.Box;
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Navire extends JFrame {
+public class NavireFrml extends JFrame {
 
 	/**
 	 * 
@@ -24,15 +39,16 @@ public class Navire extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private JTextField textField_1;
-	private JTextField textField_2;
-
+	private JComboBox<String> comboBox_1;
+	private JComboBox<String> comboBox_2;
 	
-	public Navire() {
+	public NavireFrml() {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 823, 578);
 		getContentPane().setLayout(new MigLayout("", "[grow]", "[grow]"));
 		
-		ImagePanel imagePanel = new ImagePanel(Toolkit.getDefaultToolkit().getImage(Navire.class.getResource("/ressources/assurance-voilier.jpg")));
+		ImagePanel imagePanel = new ImagePanel(Toolkit.getDefaultToolkit().getImage(NavireFrml.class.getResource("/ressources/assurance-voilier.jpg")));
 
 		getContentPane().add(imagePanel, "cell 0 0,grow");
 		imagePanel.setLayout(new MigLayout("", "[114px][][][][][][][][grow][][][][grow][grow][][][][][][][][][][grow]", "[20px][][][][][][][][][][][][][][][][][][][][]"));
@@ -55,9 +71,13 @@ public class Navire extends JFrame {
 		lblNewLabel.setFont(new Font("Arial Black", Font.PLAIN, 13));
 		imagePanel.add(lblNewLabel, "cell 0 5 3 1");
 		
-		textField_2 = new JTextField();
-		imagePanel.add(textField_2, "cell 8 5 11 1,growx");
-		textField_2.setColumns(10);
+		JComboBox comboBox = new JComboBox();
+		imagePanel.add(comboBox, "cell 8 5 11 1,growx");
+		
+		JButton btnNewButton_2 = new JButton("Nouveau");
+		btnNewButton_2.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		imagePanel.add(btnNewButton_2, "cell 21 5");
+		
 		
 		Component verticalStrut_2 = Box.createVerticalStrut(20);
 		imagePanel.add(verticalStrut_2, "cell 9 6");
@@ -69,8 +89,30 @@ public class Navire extends JFrame {
 		lblNewLabel_1.setFont(new Font("Arial Black", Font.PLAIN, 13));
 		imagePanel.add(lblNewLabel_1, "cell 0 8");
 		
-		JComboBox comboBox_2 = new JComboBox();
-		imagePanel.add(comboBox_2, "cell 8 8 11 1,growx");
+		comboBox_1 = new JComboBox<String>();
+		imagePanel.add(comboBox_1, "cell 8 8 11 1,growx");
+		comboBox_1.removeAllItems();
+		ArrayList<String> listSerie = new ArrayList<String>();
+		listSerie=voilierDAO.getSerie();
+		for(String serie : listSerie){
+			comboBox_1.addItem(serie);
+		}
+		comboBox_1.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// TODO Auto-generated method stub
+				String series = stringSerie();
+
+				comboBox_2.removeAllItems();
+				ArrayList<String> listClass = voilierDAO.getClasse(series);
+				for(String classe : listClass){
+					comboBox_2.addItem(classe);
+				}
+				
+
+			}
+		});
 		
 		Component verticalStrut_4 = Box.createVerticalStrut(20);
 		imagePanel.add(verticalStrut_4, "cell 9 9");
@@ -82,8 +124,8 @@ public class Navire extends JFrame {
 		lblNewLabel_2.setFont(new Font("Arial Black", Font.PLAIN, 13));
 		imagePanel.add(lblNewLabel_2, "cell 0 11");
 		
-		JComboBox comboBox_3 = new JComboBox();
-		imagePanel.add(comboBox_3, "cell 8 11 11 1,growx");
+		comboBox_2 = new JComboBox<String>();
+		imagePanel.add(comboBox_2, "cell 8 11 11 1,growx");
 		
 		Component verticalStrut_6 = Box.createVerticalStrut(20);
 		imagePanel.add(verticalStrut_6, "cell 9 12");
@@ -120,11 +162,12 @@ public class Navire extends JFrame {
 		
 		JButton btnNewButton_1 = new JButton("Quitter");
 		btnNewButton_1.setFont(new Font("Arial Black", Font.PLAIN, 11));
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		imagePanel.add(btnNewButton_1, "cell 13 20");
-	}
+		
 
+	}
+	public String stringSerie() {
+		  return (String) this.comboBox_1.getSelectedItem();
+		 }
 }
+
