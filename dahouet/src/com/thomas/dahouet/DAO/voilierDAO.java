@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.thomas.dahouet.model.Classe;
 import com.thomas.dahouet.model.Serie;
 
 public class voilierDAO {
@@ -19,7 +20,7 @@ public class voilierDAO {
 		ArrayList<Serie> serieList = new ArrayList<>();
 		// test avec select
 		Statement stm;
-		
+
 		try {
 			stm = c.createStatement();
 
@@ -42,32 +43,48 @@ public class voilierDAO {
 		return serieList;
 
 	}
-	
-	public static ArrayList<String> getClasse(String serie){
-		c = Connect.cConnect();
 
-		ArrayList<String> serieClasse = new ArrayList<>();
+	public static ArrayList<Classe> getClasse(Serie serie) {
+		c = Connect.cConnect();
+		String nomSerie = serie.getNomSerie();
+		int numSerie = 0;
+		ArrayList<Classe> classeList = new ArrayList<>();
 		// test avec select
 		Statement stm;
 		
-		
-			try {
-				stm=c.createStatement();
-				String sql = "select distinct classe from voilier where serie='"+serie+"'";
-				ResultSet rs = stm.executeQuery(sql);
+		try {
+			stm = c.createStatement();
 
-				while (rs.next()) {
-					String c = new String(rs.getString("CLASSE"));
-
-					serieClasse.add(c);
-				}
-				rs.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			String sql = "select NUM_SERIE from serie where NOM_SERIE ='"+nomSerie+"'";
+			ResultSet rs = stm.executeQuery(sql);
+			while (rs.next()) {
+			numSerie=rs.getInt("NUM_SERIE");
 			}
-		
-		
-		return serieClasse;
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			stm = c.createStatement();
+
+			String sql = "select classe.NOM_CLASSE from classe INNER join serie on serie.NUM_SERIE = classe.NUM_SERIE where serie.NUM_SERIE ='"
+					+ numSerie + "'";
+			ResultSet rs = stm.executeQuery(sql);
+
+			while (rs.next()) {
+				Classe classe = new Classe(nomSerie, null);
+				String s = new String(rs.getString("NOM_CLASSE"));
+				classe.setNomClasse(s);
+				classeList.add(classe);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return classeList;
 	}
 }

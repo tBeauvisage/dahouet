@@ -2,6 +2,7 @@ package com.thomas.dahouet.GUI;
 
 import com.thomas.dahouet.DAO.voilierDAO;
 import com.thomas.dahouet.GUI.ImagePanel;
+import com.thomas.dahouet.model.Classe;
 import com.thomas.dahouet.model.Serie;
 import com.thomas.dahouhouet.controller.Controller;
 
@@ -95,6 +96,7 @@ public class NavireFrml extends JFrame {
 		imagePanel.add(comboBox_1, "cell 8 8 11 1,growx");
 		comboBox_1.removeAllItems();
 		ArrayList<Serie> listSerie = control.serieInit();
+		
 		for(Serie serie : listSerie){
 			String nomSerie = serie.getNomSerie();
 			comboBox_1.addItem(nomSerie);
@@ -104,15 +106,16 @@ public class NavireFrml extends JFrame {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				// TODO Auto-generated method stub
-				String series = stringSerie();
-
 				comboBox_2.removeAllItems();
-				ArrayList<String> listClass = voilierDAO.getClasse(series);
-				for(String classe : listClass){
-					comboBox_2.addItem(classe);
-				}
-				
+				String test = (String)comboBox_1.getSelectedItem();
+				Serie serie =new Serie(test);
+				ArrayList<Classe> listClasse=control.classeInit(serie);
+				for(Classe classe : listClasse){
+					String nomClasse = classe.getNomClasse();
+					
+					comboBox_2.addItem(nomClasse);
 
+			}
 			}
 		});
 		
@@ -128,6 +131,7 @@ public class NavireFrml extends JFrame {
 		
 		comboBox_2 = new JComboBox<String>();
 		imagePanel.add(comboBox_2, "cell 8 11 11 1,growx");
+		
 		
 		Component verticalStrut_6 = Box.createVerticalStrut(20);
 		imagePanel.add(verticalStrut_6, "cell 9 12");
@@ -165,9 +169,10 @@ public class NavireFrml extends JFrame {
 		JButton btnNewButton_1 = new JButton("Quitter");
 		btnNewButton_1.setFont(new Font("Arial Black", Font.PLAIN, 11));
 		imagePanel.add(btnNewButton_1, "cell 13 20");
+		}
 		
 
-	}
+	
 	public String stringSerie() {
 		  return (String) this.comboBox_1.getSelectedItem();
 		 }
