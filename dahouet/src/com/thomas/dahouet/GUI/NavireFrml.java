@@ -2,6 +2,8 @@ package com.thomas.dahouet.GUI;
 
 import com.thomas.dahouet.DAO.voilierDAO;
 import com.thomas.dahouet.GUI.ImagePanel;
+import com.thomas.dahouet.model.Serie;
+import com.thomas.dahouhouet.controller.Controller;
 
 import javafx.scene.control.ComboBox;
 
@@ -47,7 +49,7 @@ public class NavireFrml extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 823, 578);
 		getContentPane().setLayout(new MigLayout("", "[grow]", "[grow]"));
-		
+		Controller control = new Controller();
 		ImagePanel imagePanel = new ImagePanel(Toolkit.getDefaultToolkit().getImage(NavireFrml.class.getResource("/ressources/assurance-voilier.jpg")));
 
 		getContentPane().add(imagePanel, "cell 0 0,grow");
@@ -92,10 +94,10 @@ public class NavireFrml extends JFrame {
 		comboBox_1 = new JComboBox<String>();
 		imagePanel.add(comboBox_1, "cell 8 8 11 1,growx");
 		comboBox_1.removeAllItems();
-		ArrayList<String> listSerie = new ArrayList<String>();
-		listSerie=voilierDAO.getSerie();
-		for(String serie : listSerie){
-			comboBox_1.addItem(serie);
+		ArrayList<Serie> listSerie = control.serieInit();
+		for(Serie serie : listSerie){
+			String nomSerie = serie.getNomSerie();
+			comboBox_1.addItem(nomSerie);
 		}
 		comboBox_1.addItemListener(new ItemListener() {
 			

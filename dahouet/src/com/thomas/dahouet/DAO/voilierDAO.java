@@ -7,26 +7,30 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.thomas.dahouet.model.Serie;
+
 public class voilierDAO {
 	private static Connection c;
 
-	public static ArrayList<String> getSerie() {
+	public static ArrayList<Serie> getSerie() {
 
 		c = Connect.cConnect();
 
-		ArrayList<String> serieList = new ArrayList<>();
+		ArrayList<Serie> serieList = new ArrayList<>();
 		// test avec select
 		Statement stm;
+		
 		try {
 			stm = c.createStatement();
 
-			String sql = "select distinct serie from voilier";
+			String sql = "select NOM_SERIE from serie";
 			ResultSet rs = stm.executeQuery(sql);
 
 			while (rs.next()) {
-				String s = new String(rs.getString("SERIE"));
-
-				serieList.add(s);
+				Serie serie = new Serie(null);
+				String s = new String(rs.getString("NOM_SERIE"));
+				serie.setNomSerie(s);
+				serieList.add(serie);
 			}
 			rs.close();
 
