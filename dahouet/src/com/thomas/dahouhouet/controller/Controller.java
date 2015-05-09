@@ -10,6 +10,7 @@ import com.thomas.dahouet.model.Classe;
 import com.thomas.dahouet.model.Club;
 import com.thomas.dahouet.model.Proprietaire;
 import com.thomas.dahouet.model.Serie;
+import com.thomas.dahouet.model.Voilier;
 
 public class Controller {
 	
@@ -50,5 +51,12 @@ public class Controller {
 		int numClub ;
 		numClub = proprioDAO.getNumClub(club);
 		proprioDAO.newProprio(proprio, numClub);
+	}
+	public void createVoilier (Voilier voilier,Classe classe, Proprietaire proprio){
+		
+		int numClasse = voilierDAO.getNumClasse(classe);
+		int numProprio = proprioDAO.getNumProprio(proprio);
+		voilierDAO.newVoilier(voilier, numClasse, numProprio);
+		
 	}
 }

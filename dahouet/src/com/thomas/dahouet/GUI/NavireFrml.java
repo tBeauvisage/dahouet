@@ -4,9 +4,11 @@ import com.thomas.dahouet.GUI.ImagePanel;
 import com.thomas.dahouet.model.Classe;
 import com.thomas.dahouet.model.Proprietaire;
 import com.thomas.dahouet.model.Serie;
+import com.thomas.dahouet.model.Voilier;
 import com.thomas.dahouhouet.controller.Controller;
 
 import javax.swing.JFrame;
+
 import net.miginfocom.swing.MigLayout;
 
 import java.awt.Toolkit;
@@ -41,6 +43,7 @@ public class NavireFrml extends JFrame {
 	private JComboBox<String> comboBox_1;
 	private JComboBox<String> comboBox_2;
 	private JButton btnNewButton_2;
+	private JButton btnNewButton;
 
 	public NavireFrml() {
 		setResizable(false);
@@ -185,9 +188,20 @@ public class NavireFrml extends JFrame {
 			Component verticalStrut_12 = Box.createVerticalStrut(20);
 			imagePanel.add(verticalStrut_12, "cell 8 19");
 
-			JButton btnNewButton = new JButton("OK");
+			btnNewButton = new JButton("OK");
 			btnNewButton.setFont(new Font("Arial Black", Font.PLAIN, 11));
 			imagePanel.add(btnNewButton, "cell 6 20");
+			btnNewButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+				Voilier voilier = new Voilier(textField_1.getText(), Double.parseDouble(textField.getText()));
+				Classe classe = new Classe((String)comboBox_1.getSelectedItem(), (String)comboBox_2.getSelectedItem());
+				Proprietaire proprio = new Proprietaire((String)comboBox_3.getSelectedItem(), null, null, 0, null);
+				control.createVoilier(voilier, classe, proprio);
+					
+				}
+			});
 			
 
 			JButton btnNewButton_1 = new JButton("Quitter");

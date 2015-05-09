@@ -4,17 +4,15 @@ public class Voilier {
 	
 protected String nom;
 protected double coef;
-protected String serie;
-protected String classe;
 
 
 
-public Voilier(String nom, double coef, String serie, String classe) {
+
+public Voilier(String nom, double coef) {
 	super();
 	this.nom = nom;
 	this.coef = coef;
-	this.serie = serie;
-	this.classe = classe;
+	
 }
 
 
@@ -40,31 +38,7 @@ public double getCoef() {
 public void setCoef(double coef) {
 	this.coef = coef;
 }
-
-
-
-public String getSerie() {
-	return serie;
 }
 
 
 
-public void setSerie(String serie) {
-	this.serie = serie;
-}
-
-
-
-public String getClasse() {
-	return classe;
-}
-
-
-
-public void setClasse(String classe) {
-	this.classe = classe;
-}
-
-
-
-}

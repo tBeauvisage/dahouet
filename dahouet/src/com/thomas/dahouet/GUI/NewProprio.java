@@ -236,6 +236,8 @@ public class NewProprio extends JFrame {
 				String nomClub = (String) comboBox.getSelectedItem();
 				Club club = new Club(nomClub);
 			control.createProprio(proprio,club);
+			control.initNavireFrml();
+			dispose();
 				
 
 			}

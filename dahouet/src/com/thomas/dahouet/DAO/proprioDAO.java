@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import com.thomas.dahouet.model.Classe;
 import com.thomas.dahouet.model.Club;
 import com.thomas.dahouet.model.Proprietaire;
 
@@ -132,5 +133,26 @@ public static void newProprio(Proprietaire proprio, int numClub){
 	  } 
 	  
 	  
+}
+public static int getNumProprio(Proprietaire proprio) {
+	c = Connect.cConnect();
+	String nomProprio = proprio.getNom();
+	int numproprio = 0;
+	Statement stm;
+
+	try {
+		stm = c.createStatement();
+
+		String sql = "select ID_PERSONNE from personne where NOM_PERSONNE ='" + nomProprio + "'";
+		ResultSet rs = stm.executeQuery(sql);
+		rs.next();
+		numproprio = rs.getInt("ID_PERSONNE");
+
+		rs.close();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return numproprio;
 }
 }
