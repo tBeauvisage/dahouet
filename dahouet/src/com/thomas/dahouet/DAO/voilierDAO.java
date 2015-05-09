@@ -57,11 +57,12 @@ public class voilierDAO {
 
 			String sql = "select NUM_SERIE from serie where NOM_SERIE ='"+nomSerie+"'";
 			ResultSet rs = stm.executeQuery(sql);
-			while (rs.next()) {
+			rs.next();
 			numSerie=rs.getInt("NUM_SERIE");
-			}
+			
 			rs.close();
-		} catch (SQLException e) {
+		}
+		 catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

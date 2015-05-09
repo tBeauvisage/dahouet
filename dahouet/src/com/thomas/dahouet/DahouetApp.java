@@ -7,8 +7,8 @@ public class DahouetApp {
 
 	public static void main(String[] args) {
 
-		NavireFrml frame = new NavireFrml();
-		frame.setVisible(true);
+		Controller control = new Controller();
+		control.initNavireFrml();
 	}
 	}
 
