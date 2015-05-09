@@ -7,6 +7,7 @@ import com.thomas.dahouet.DAO.voilierDAO;
 import com.thomas.dahouet.GUI.NavireFrml;
 import com.thomas.dahouet.GUI.NewProprio;
 import com.thomas.dahouet.model.Classe;
+import com.thomas.dahouet.model.Club;
 import com.thomas.dahouet.model.Proprietaire;
 import com.thomas.dahouet.model.Serie;
 
@@ -39,4 +40,9 @@ public class Controller {
 		listProprio=proprioDAO.getProprio();
 		return listProprio;
 }
+	public ArrayList<Club> clubInit(){
+		ArrayList<Club> listClub = new ArrayList<Club>();
+		listClub=proprioDAO.getClub();
+		return listClub;
+	}
 }

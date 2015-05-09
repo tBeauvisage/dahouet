@@ -1,17 +1,12 @@
 package com.thomas.dahouet.GUI;
 
-import com.thomas.dahouet.DAO.voilierDAO;
 import com.thomas.dahouet.GUI.ImagePanel;
 import com.thomas.dahouet.model.Classe;
 import com.thomas.dahouet.model.Proprietaire;
 import com.thomas.dahouet.model.Serie;
 import com.thomas.dahouhouet.controller.Controller;
 
-import javafx.scene.control.ComboBox;
-
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 import net.miginfocom.swing.MigLayout;
 
 import java.awt.Toolkit;
@@ -33,7 +28,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
-import java.util.List;
 
 public class NavireFrml extends JFrame {
 

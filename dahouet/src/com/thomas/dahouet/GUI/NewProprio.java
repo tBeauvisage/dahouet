@@ -5,13 +5,23 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 
 import net.miginfocom.swing.MigLayout;
+
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+
 import java.awt.Component;
+import java.util.ArrayList;
+
 import javax.swing.Box;
 import javax.swing.JButton;
+
+import com.thomas.dahouet.model.Club;
+import com.thomas.dahouet.model.Serie;
+import com.thomas.dahouhouet.controller.Controller;
 
 public class NewProprio extends JFrame{
 
@@ -22,12 +32,13 @@ public class NewProprio extends JFrame{
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
+	private JComboBox<String> comboBox;
 	public NewProprio() {
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 823, 578);
 		getContentPane().setLayout(new MigLayout("", "[grow]", "[grow]"));
-		
+		Controller control = new Controller();
 		ImagePanel imagePanel = new ImagePanel(Toolkit.getDefaultToolkit().getImage(NavireFrml.class.getResource("/ressources/assurance-voilier.jpg")));
 
 		getContentPane().add(imagePanel, "cell 0 0,grow");
@@ -88,8 +99,15 @@ public class NewProprio extends JFrame{
 		lblNewLabel_3.setFont(new Font("Arial Black", Font.PLAIN, 13));
 		imagePanel.add(lblNewLabel_3, "cell 0 12");
 		
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox<String>();
 		imagePanel.add(comboBox, "cell 6 12 6 1,growx");
+		comboBox.removeAllItems();
+		ArrayList<Club> listClub = control.clubInit();
+
+		for (Club club : listClub) {
+			String nomClub = club.getNomClub();
+			comboBox.addItem(nomClub);
+		}
 		
 		Component verticalStrut_13 = Box.createVerticalStrut(20);
 		imagePanel.add(verticalStrut_13, "cell 7 13");
