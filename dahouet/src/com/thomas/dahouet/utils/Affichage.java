@@ -1,13 +1,12 @@
 package com.thomas.dahouet.utils;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import com.thomas.dahouet.model.Commissaire;
 import com.thomas.dahouet.model.Licencie;
 import com.thomas.dahouet.model.Proprietaire;
+
 
 public class Affichage {
 
@@ -31,8 +30,8 @@ public class Affichage {
 	}
 	
 	public static void afficheProprio(){
-	 
-		Proprietaire test2 = new Proprietaire("Shirogane", "naoto-chan@laposte.net", "Naoto", "0321510669", "22, rue Junes Inaba");
+		
+		Proprietaire test2 = new Proprietaire("Shirogane", "naoto-chan@laposte.net", "Naoto", 33321510669L, "22, rue Junes Inaba");
 		String affichage2 = test2.toString();
 		System.out.println(affichage2+"\n");
 	}

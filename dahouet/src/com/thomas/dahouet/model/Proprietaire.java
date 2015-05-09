@@ -7,23 +7,23 @@ public class Proprietaire extends Personne  {
 		// TODO Auto-generated constructor stub
 	}
 
-	private String telephone;
+	private long telephone;
 	private String adresse;
 	
 	
-	public Proprietaire(String nom, String mail, String prenom, String telephone, String adresse) {
+	public Proprietaire(String nom, String mail, String prenom, long telephone, String adresse) {
 		super(nom, mail, prenom);
 		this.telephone = telephone;
 		this.adresse = adresse;
 	}
 
 
-	public String getTelephone() {
+	public long getTelephone() {
 		return telephone;
 	}
 
 
-	public void setTelephone(String telephone) {
+	public void setTelephone(long telephone) {
 		this.telephone = telephone;
 	}
 

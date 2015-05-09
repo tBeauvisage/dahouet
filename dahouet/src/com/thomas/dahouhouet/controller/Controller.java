@@ -22,6 +22,7 @@ public class Controller {
 		NewProprio frame2 = new NewProprio();
 		frame2.setVisible(true);
 	}
+			
 	
 	public ArrayList<Serie> serieInit(){
 		ArrayList<Serie> listSerie = new ArrayList<Serie>();
@@ -44,5 +45,10 @@ public class Controller {
 		ArrayList<Club> listClub = new ArrayList<Club>();
 		listClub=proprioDAO.getClub();
 		return listClub;
+	}
+	public void createProprio(Proprietaire proprio, Club club){
+		int numClub ;
+		numClub = proprioDAO.getNumClub(club);
+		proprioDAO.newProprio(proprio, numClub);
 	}
 }

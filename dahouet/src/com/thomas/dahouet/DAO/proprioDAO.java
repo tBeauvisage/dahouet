@@ -1,6 +1,7 @@
 package com.thomas.dahouet.DAO;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -27,7 +28,7 @@ public class proprioDAO {
 			ResultSet rs = stm.executeQuery(sql);
 
 			while (rs.next()) {
-				Proprietaire proprio = new Proprietaire(null, null, null, null, null);
+				Proprietaire proprio = new Proprietaire(null, null, null, 0, null);
 				String s = new String(rs.getString("NOM_PERSONNE"));
 				proprio.setNom(s);;
 				proprioList.add(proprio);
@@ -73,4 +74,63 @@ public class proprioDAO {
 		return clubList;
 
 	}
+	public static int getNumClub(Club club){
+		c = Connect.cConnect();
+		String nomClub = club.getNomClub();
+		int numSerie = 0;
+		
+		
+		Statement stm;
+		
+		try {
+			stm = c.createStatement();
+
+			String sql = "select NUM_CLUB from club where NOM_CLUB ='"+nomClub+"'";
+			ResultSet rs = stm.executeQuery(sql);
+			rs.next();
+			numSerie=rs.getInt("NUM_CLUB");
+			
+			rs.close();
+		}
+		 catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return numSerie;
+	}
+	
+	
+public static void newProprio(Proprietaire proprio, int numClub){
+	 
+	Connection c = Connect.cConnect();
+	int numProprio = 0;
+	 PreparedStatement stm;
+	  try {
+	   stm = c.prepareStatement("insert into personne(NOM_PERSONNE,PRENOM_PERS,MAIL) VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS);
+	   stm.setString(1, proprio.getNom());
+	   stm.setString(2, proprio.getPrenom());
+	   stm.setString(3, proprio.getMail());
+	   stm.executeUpdate();
+	   
+	   ResultSet rs = stm.getGeneratedKeys();
+	   rs.next();
+	   numProprio = rs.getInt(1);
+	   stm = c.prepareStatement("insert into proprietaire(NUM_PROPR,NUM_CLUB,ADRESSE_PROPR,TEL_PROPR) VALUES(?,?,?,?)");
+	   stm.setInt(1, numProprio);
+	   stm.setInt(2, numClub);
+	   stm.setString(3, proprio.getAdresse());
+	   stm.setLong(4, proprio.getTelephone());
+	   stm.executeUpdate();
+	   
+	   stm.close();
+	   
+	   
+	  } catch (SQLException e) {
+	   e.printStackTrace();
+	   throw new RuntimeException();
+	  } 
+	  
+	  
+}
 }
