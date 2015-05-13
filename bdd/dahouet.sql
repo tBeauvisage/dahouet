@@ -96,9 +96,9 @@ INSERT INTO `commissaires` (`ID_COMMISSAIRE`, `COM_REG`) VALUES
 
 -- Export de la structure de table dahouet. commission_de_course
 CREATE TABLE IF NOT EXISTS `commission_de_course` (
-  `ID_COM` int(11) NOT NULL AUTO_INCREMENT,
+  `ID_COMISSION` int(11) NOT NULL AUTO_INCREMENT,
   `ID_PRES` int(11) NOT NULL,
-  PRIMARY KEY (`ID_COM`),
+  PRIMARY KEY (`ID_COMISSION`),
   KEY `FK_commission_de_course_commissaires` (`ID_PRES`),
   CONSTRAINT `FK_commission_de_course_commissaires` FOREIGN KEY (`ID_PRES`) REFERENCES `commissaires` (`ID_COMMISSAIRE`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `commission_de_course` (
 -- Export de données de la table dahouet.commission_de_course: ~2 rows (environ)
 DELETE FROM `commission_de_course`;
 /*!40000 ALTER TABLE `commission_de_course` DISABLE KEYS */;
-INSERT INTO `commission_de_course` (`ID_COM`, `ID_PRES`) VALUES
+INSERT INTO `commission_de_course` (`ID_COMISSION`, `ID_PRES`) VALUES
 	(1, 21),
 	(2, 22);
 /*!40000 ALTER TABLE `commission_de_course` ENABLE KEYS */;
@@ -168,7 +168,8 @@ CREATE TABLE IF NOT EXISTS `membre_d_equipage` (
   `ANNEE_LICENCE` int(11) DEFAULT NULL,
   `DATE_MEMBRE` date DEFAULT NULL,
   `POINTS_FFV` int(11) DEFAULT NULL,
-  PRIMARY KEY (`ID_MEMBRE`)
+  PRIMARY KEY (`ID_MEMBRE`),
+  CONSTRAINT `FK_membre_d_equipage_personne` FOREIGN KEY (`ID_MEMBRE`) REFERENCES `personne` (`ID_PERSONNE`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 -- Export de données de la table dahouet.membre_d_equipage: ~15 rows (environ)
@@ -213,42 +214,43 @@ CREATE TABLE IF NOT EXISTS `participation` (
   `CODE_RE` int(11) NOT NULL,
   `NUM_VOILE` int(11) NOT NULL,
   `H_DEP` time DEFAULT NULL,
-  `STATUT_DEP` char(3) DEFAULT NULL,
+  `STATUT_DEP` char(3) NOT NULL,
   `H_ARRIV` time DEFAULT NULL,
   `STATUT_ARRIV` char(3) DEFAULT NULL,
   `CLASSEMENT_FINAL` int(11) DEFAULT NULL,
   PRIMARY KEY (`ID_PART`),
   KEY `FK_participation_regate` (`CODE_RE`),
-  KEY `FK_participation_membre_d_equipage` (`ID_SKIPPER`),
   KEY `FK_participation_voilier` (`NUM_VOILE`),
-  CONSTRAINT `FK_participation_voilier` FOREIGN KEY (`NUM_VOILE`) REFERENCES `voilier` (`NUM_VOILE`),
-  CONSTRAINT `FK_participation_regate` FOREIGN KEY (`CODE_RE`) REFERENCES `regate` (`CODE_RE`)
+  KEY `FK_participation_membre_d_equipage` (`ID_SKIPPER`),
+  CONSTRAINT `FK_participation_membre_d_equipage` FOREIGN KEY (`ID_SKIPPER`) REFERENCES `membre_d_equipage` (`ID_MEMBRE`),
+  CONSTRAINT `FK_participation_regate` FOREIGN KEY (`CODE_RE`) REFERENCES `regate` (`CODE_RE`),
+  CONSTRAINT `FK_participation_voilier` FOREIGN KEY (`NUM_VOILE`) REFERENCES `voilier` (`NUM_VOILE`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 -- Export de données de la table dahouet.participation: ~20 rows (environ)
 DELETE FROM `participation`;
 /*!40000 ALTER TABLE `participation` DISABLE KEYS */;
 INSERT INTO `participation` (`ID_PART`, `ID_SKIPPER`, `CODE_RE`, `NUM_VOILE`, `H_DEP`, `STATUT_DEP`, `H_ARRIV`, `STATUT_ARRIV`, `CLASSEMENT_FINAL`) VALUES
-	(1, 1, 1, 1, '11:00:00', NULL, '15:00:00', NULL, NULL),
-	(2, 4, 1, 2, '12:00:00', NULL, '16:00:00', NULL, NULL),
-	(3, 7, 1, 3, '13:00:00', NULL, '17:00:00', 'DNF', NULL),
-	(4, 10, 1, 4, '14:00:00', NULL, '18:00:00', NULL, NULL),
-	(5, 13, 1, 5, '15:00:00', NULL, '19:00:00', NULL, NULL),
-	(6, 1, 2, 1, '16:00:00', NULL, '20:00:00', NULL, NULL),
-	(7, 4, 2, 2, '17:00:00', NULL, '21:00:00', NULL, NULL),
-	(8, 7, 2, 3, '18:00:00', NULL, '22:00:00', 'DSQ', NULL),
-	(9, 10, 2, 4, '19:00:00', NULL, '23:00:00', NULL, NULL),
-	(10, 13, 2, 5, '20:00:00', NULL, '00:00:00', NULL, NULL),
-	(11, 1, 3, 1, '21:00:00', NULL, '01:00:00', NULL, 3),
-	(12, 4, 3, 2, '22:00:00', NULL, '02:00:00', NULL, 5),
-	(13, 7, 3, 3, '23:00:00', NULL, '03:00:00', NULL, 1),
-	(14, 10, 3, 4, '00:00:00', NULL, '04:00:00', NULL, 4),
-	(15, 13, 3, 5, '01:00:00', NULL, '05:00:00', NULL, 2),
-	(16, 1, 4, 1, '02:00:00', NULL, '06:00:00', NULL, 2),
-	(17, 4, 4, 2, '03:00:00', NULL, '07:00:00', NULL, 5),
-	(18, 7, 4, 3, '04:00:00', NULL, '08:00:00', NULL, 4),
-	(19, 10, 4, 4, '05:00:00', NULL, '09:00:00', NULL, 1),
-	(20, 13, 4, 5, '06:00:00', NULL, '10:00:00', NULL, 3);
+	(1, 1, 1, 1, '11:00:00', '', '15:00:00', NULL, NULL),
+	(2, 4, 1, 2, '12:00:00', '', '16:00:00', NULL, NULL),
+	(3, 7, 1, 3, '13:00:00', '', '17:00:00', 'DNF', NULL),
+	(4, 10, 1, 4, '14:00:00', '', '18:00:00', NULL, NULL),
+	(5, 13, 1, 5, '15:00:00', '', '19:00:00', NULL, NULL),
+	(6, 1, 2, 1, '16:00:00', '', '20:00:00', NULL, NULL),
+	(7, 4, 2, 2, '17:00:00', '', '21:00:00', NULL, NULL),
+	(8, 7, 2, 3, '18:00:00', '', '22:00:00', 'DSQ', NULL),
+	(9, 10, 2, 4, '19:00:00', '', '23:00:00', NULL, NULL),
+	(10, 13, 2, 5, '20:00:00', '', '00:00:00', NULL, NULL),
+	(11, 1, 3, 1, '21:00:00', '', '01:00:00', NULL, 3),
+	(12, 4, 3, 2, '22:00:00', '', '02:00:00', NULL, 5),
+	(13, 7, 3, 3, '23:00:00', '', '03:00:00', NULL, 1),
+	(14, 10, 3, 4, '00:00:00', '', '04:00:00', NULL, 4),
+	(15, 13, 3, 5, '01:00:00', '', '05:00:00', NULL, 2),
+	(16, 1, 4, 1, '02:00:00', '', '06:00:00', NULL, 2),
+	(17, 4, 4, 2, '03:00:00', '', '07:00:00', NULL, 5),
+	(18, 7, 4, 3, '04:00:00', '', '08:00:00', NULL, 4),
+	(19, 10, 4, 4, '05:00:00', '', '09:00:00', NULL, 1),
+	(20, 13, 4, 5, '06:00:00', '', '10:00:00', NULL, 3);
 /*!40000 ALTER TABLE `participation` ENABLE KEYS */;
 
 
@@ -410,7 +412,7 @@ CREATE TABLE IF NOT EXISTS `regate` (
   KEY `FK_regate_commission_de_course` (`ID_COM`),
   KEY `FK_regate_challenge` (`ID_CHALL`),
   CONSTRAINT `FK_regate_challenge` FOREIGN KEY (`ID_CHALL`) REFERENCES `challenge` (`ID_CHALL`),
-  CONSTRAINT `FK_regate_commission_de_course` FOREIGN KEY (`ID_COM`) REFERENCES `commission_de_course` (`ID_COM`)
+  CONSTRAINT `FK_regate_commission_de_course` FOREIGN KEY (`ID_COM`) REFERENCES `commission_de_course` (`ID_COMISSION`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 -- Export de données de la table dahouet.regate: ~4 rows (environ)
