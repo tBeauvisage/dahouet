@@ -232,7 +232,7 @@ public class NewProprio extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Proprietaire proprio = new Proprietaire(textField.getText(), textField_4.getText(), textField_3.getText(), Long.parseLong(textField_2.getText()), textField_1.getText());
+				Proprietaire proprio = new Proprietaire(0,textField.getText(), textField_4.getText(), textField_3.getText(), Long.parseLong(textField_2.getText()), textField_1.getText());
 				String nomClub = (String) comboBox.getSelectedItem();
 				Club club = new Club(nomClub);
 			control.createProprio(proprio,club);

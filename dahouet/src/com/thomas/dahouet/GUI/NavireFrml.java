@@ -39,9 +39,9 @@ public class NavireFrml extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private JTextField textField_1;
-	private JComboBox<String> comboBox_3;
-	private JComboBox<String> comboBox_1;
-	private JComboBox<String> comboBox_2;
+	private JComboBox<Proprietaire> comboBox_3;
+	private JComboBox<Serie> comboBox_1;
+	private JComboBox<Classe> comboBox_2;
 	private JButton btnNewButton_2;
 	private JButton btnNewButton;
 
@@ -76,14 +76,13 @@ public class NavireFrml extends JFrame {
 		lblNewLabel.setFont(new Font("Arial Black", Font.PLAIN, 13));
 		imagePanel.add(lblNewLabel, "cell 0 5 3 1");
 
-		comboBox_3 = new JComboBox<String>();
+		comboBox_3 = new JComboBox<Proprietaire>();
 		imagePanel.add(comboBox_3, "cell 8 5 11 1,growx");
 		comboBox_3.removeAllItems();
 		ArrayList<Proprietaire> listProprio = control.proprioInit();
 
 		for (Proprietaire proprio : listProprio) {
-			String nomProprio = proprio.getNom();
-			comboBox_3.addItem(nomProprio);
+			comboBox_3.addItem(proprio);
 		}
 
 			btnNewButton_2 = new JButton("Nouveau");
@@ -109,14 +108,14 @@ public class NavireFrml extends JFrame {
 			lblNewLabel_1.setFont(new Font("Arial Black", Font.PLAIN, 13));
 			imagePanel.add(lblNewLabel_1, "cell 0 8");
 
-			comboBox_1 = new JComboBox<String>();
+			comboBox_1 = new JComboBox<Serie>();
 			imagePanel.add(comboBox_1, "cell 8 8 11 1,growx");
 			comboBox_1.removeAllItems();
 			ArrayList<Serie> listSerie = control.serieInit();
 
 			for (Serie serie : listSerie) {
-				String nomSerie = serie.getNomSerie();
-				comboBox_1.addItem(nomSerie);
+				
+				comboBox_1.addItem(serie);
 			}
 			comboBox_1.addItemListener(new ItemListener() {
 
@@ -124,13 +123,12 @@ public class NavireFrml extends JFrame {
 				public void itemStateChanged(ItemEvent e) {
 					// TODO Auto-generated method stub
 					comboBox_2.removeAllItems();
-					String test = (String) comboBox_1.getSelectedItem();
-					Serie serie = new Serie(test);
+					Serie serie = (Serie) comboBox_1.getSelectedItem();
 					ArrayList<Classe> listClasse = control.classeInit(serie);
 					for (Classe classe : listClasse) {
-						String nomClasse = classe.getNomClasse();
+						
 
-						comboBox_2.addItem(nomClasse);
+						comboBox_2.addItem(classe);
 
 					}
 				}
@@ -146,16 +144,15 @@ public class NavireFrml extends JFrame {
 			lblNewLabel_2.setFont(new Font("Arial Black", Font.PLAIN, 13));
 			imagePanel.add(lblNewLabel_2, "cell 0 11");
 
-			comboBox_2 = new JComboBox<String>();
+			comboBox_2 = new JComboBox<Classe>();
 			imagePanel.add(comboBox_2, "cell 8 11 11 1,growx");
 			comboBox_2.removeAllItems();
-			String test = (String) comboBox_1.getSelectedItem();
-			Serie serie = new Serie(test);
+			Serie serie = (Serie) comboBox_1.getSelectedItem();
 			ArrayList<Classe> listClasse = control.classeInit(serie);
 			for (Classe classe : listClasse) {
-				String nomClasse = classe.getNomClasse();
+				
 
-				comboBox_2.addItem(nomClasse);
+				comboBox_2.addItem(classe);
 
 			}
 
@@ -196,8 +193,8 @@ public class NavireFrml extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 				Voilier voilier = new Voilier(textField_1.getText(), Double.parseDouble(textField.getText()));
-				Classe classe = new Classe((String)comboBox_1.getSelectedItem(), (String)comboBox_2.getSelectedItem());
-				Proprietaire proprio = new Proprietaire((String)comboBox_3.getSelectedItem(), null, null, 0, null);
+				Classe classe =(Classe) comboBox_2.getSelectedItem();
+				Proprietaire proprio = (Proprietaire) comboBox_3.getSelectedItem();
 				control.createVoilier(voilier, classe, proprio);
 					
 				}

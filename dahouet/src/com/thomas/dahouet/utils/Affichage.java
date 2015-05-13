@@ -18,7 +18,7 @@ public class Affichage {
 		  
 		  Licencie test=null;
 		  try {
-		   test = new Licencie("Kirigaya", "Kirito@aincrad.net", "Kazuto", 1580, 230.8, datnais.parse(birthday), 2015);
+		   test = new Licencie(1,"Kirigaya", "Kirito@aincrad.net", "Kazuto", 1580, 230.8, datnais.parse(birthday), 2015);
 		  } catch (ParseException e) {
 		   // TODO Auto-generated catch block
 		   e.printStackTrace();
@@ -31,14 +31,14 @@ public class Affichage {
 	
 	public static void afficheProprio(){
 		
-		Proprietaire test2 = new Proprietaire("Shirogane", "naoto-chan@laposte.net", "Naoto", 33321510669L, "22, rue Junes Inaba");
+		Proprietaire test2 = new Proprietaire(2,"Shirogane", "naoto-chan@laposte.net", "Naoto", 33321510669L, "22, rue Junes Inaba");
 		String affichage2 = test2.toString();
 		System.out.println(affichage2+"\n");
 	}
 	
 	
 	public static void afficheCommissaire(){
-		Commissaire test3 = new Commissaire("Strife", "Cloud@midgard.net", "Cloud", "Nibelheim");
+		Commissaire test3 = new Commissaire(3,"Strife", "Cloud@midgard.net", "Cloud", "Nibelheim");
 		String affichage3 = test3.toString();
 		System.out.println(affichage3+"\n");
 			

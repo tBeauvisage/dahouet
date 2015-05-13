@@ -1,12 +1,17 @@
 package com.thomas.dahouet.model;
 
 public class Personne {
+	protected int idPersonne;
 	protected String nom;
 	protected String mail;
 	protected String prenom;
 
-	public Personne(String nom, String mail, String prenom) {
+	
+	
+
+	public Personne(int idPersonne, String nom, String mail, String prenom) {
 		super();
+		this.idPersonne = idPersonne;
 		this.nom = nom;
 		this.mail = mail;
 		this.prenom = prenom;
@@ -34,6 +39,14 @@ public class Personne {
 
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
+	}
+
+	public int getIdPersonne() {
+		return idPersonne;
+	}
+
+	public void setIdPersonne(int idPersonne) {
+		this.idPersonne = idPersonne;
 	}
 
 

@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import com.thomas.dahouet.model.Classe;
 import com.thomas.dahouet.model.Club;
 import com.thomas.dahouet.model.Proprietaire;
 
@@ -25,14 +24,20 @@ public class proprioDAO {
 		try {
 			stm = c.createStatement();
 
-			String sql = "select personne.NOM_PERSONNE from personne inner join proprietaire on personne.ID_PERSONNE=proprietaire.NUM_PROPR";
+			String sql = "select * from personne inner join proprietaire on personne.ID_PERSONNE=proprietaire.NUM_PROPR";
 			ResultSet rs = stm.executeQuery(sql);
 
 			while (rs.next()) {
-				Proprietaire proprio = new Proprietaire(null, null, null, 0, null);
-				String s = new String(rs.getString("NOM_PERSONNE"));
-				proprio.setNom(s);;
-				proprioList.add(proprio);
+				int id =rs.getInt("ID_PERSONNE");
+				String nom = new String(rs.getString("NOM_PERSONNE"));
+				String prenom = new String(rs.getString("PRENOM_PERS"));
+				String mail = new String(rs.getString("MAIL"));
+				long tel = rs.getLong("TEL_PROPR");
+				String adresse = rs.getString("ADRESSE_PROPR");
+				Proprietaire proprio = new Proprietaire(id,nom, mail, prenom, tel, adresse);
+				
+				
+			proprioList.add(proprio);
 			}
 			rs.close();
 

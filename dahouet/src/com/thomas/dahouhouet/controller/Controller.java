@@ -54,9 +54,8 @@ public class Controller {
 	}
 	public void createVoilier (Voilier voilier,Classe classe, Proprietaire proprio){
 		
-		int numClasse = voilierDAO.getNumClasse(classe);
-		int numProprio = proprioDAO.getNumProprio(proprio);
-		voilierDAO.newVoilier(voilier, numClasse, numProprio);
+		
+		voilierDAO.newVoilier(voilier, classe, proprio);
 		
 	}
 }

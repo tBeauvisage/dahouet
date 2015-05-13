@@ -3,10 +3,15 @@ package com.thomas.dahouet.model;
 public class Serie {
 
 	private String nomSerie;
+	private int idSerie;
 
-	public Serie(String nomSerie) {
+	
+	
+
+	public Serie(String nomSerie, int idSerie) {
 		super();
 		this.nomSerie = nomSerie;
+		this.idSerie = idSerie;
 	}
 
 	public String getNomSerie() {
@@ -15,6 +20,19 @@ public class Serie {
 
 	public void setNomSerie(String nomSerie) {
 		this.nomSerie = nomSerie;
+	}
+	
+	public int getIdSerie() {
+		return idSerie;
+	}
+
+	public void setIdSerie(int idSerie) {
+		this.idSerie = idSerie;
+	}
+
+	@Override
+	public String toString() {
+		return idSerie + " : " +nomSerie ;
 	}
 	
 	
