@@ -1,4 +1,4 @@
-package com.thomas.dahouhouet.controller;
+package com.thomas.dahouet.controller;
 
 import java.util.ArrayList;
 

@@ -23,9 +23,9 @@ import java.util.ArrayList;
 import javax.swing.Box;
 import javax.swing.JButton;
 
+import com.thomas.dahouet.controller.Controller;
 import com.thomas.dahouet.model.Club;
 import com.thomas.dahouet.model.Proprietaire;
-import com.thomas.dahouhouet.controller.Controller;
 
 public class NewProprio extends JFrame {
 

@@ -1,11 +1,11 @@
 package com.thomas.dahouet.GUI;
 
 import com.thomas.dahouet.GUI.ImagePanel;
+import com.thomas.dahouet.controller.Controller;
 import com.thomas.dahouet.model.Classe;
 import com.thomas.dahouet.model.Proprietaire;
 import com.thomas.dahouet.model.Serie;
 import com.thomas.dahouet.model.Voilier;
-import com.thomas.dahouhouet.controller.Controller;
 
 import javax.swing.JFrame;
 
