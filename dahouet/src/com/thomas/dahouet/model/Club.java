@@ -2,7 +2,7 @@ package com.thomas.dahouet.model;
 
 public class Club {
 	
-	private String nomClub;
+	protected String nomClub;
 
 	public Club(String nomClub) {
 		super();

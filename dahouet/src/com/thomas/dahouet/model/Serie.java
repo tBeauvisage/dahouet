@@ -2,8 +2,8 @@ package com.thomas.dahouet.model;
 
 public class Serie {
 
-	private String nomSerie;
-	private int idSerie;
+	protected String nomSerie;
+	protected int idSerie;
 
 	
 	

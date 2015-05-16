@@ -5,8 +5,8 @@ public class Proprietaire extends Personne  {
 	
 	
 
-	private long telephone;
-	private String adresse;
+	protected long telephone;
+	protected String adresse;
 	
 	
 	

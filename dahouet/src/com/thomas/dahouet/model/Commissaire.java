@@ -3,7 +3,7 @@ package com.thomas.dahouet.model;
 public class Commissaire extends Personne {
 
 	
-	private String comite;
+	protected String comite;
 
 	
 	

@@ -2,8 +2,8 @@ package com.thomas.dahouet.model;
 
 public class Classe extends Serie {
 	
-	private String nomClasse;
-	private int idClasse;
+	protected String nomClasse;
+	protected int idClasse;
 
 	
 

@@ -8,10 +8,10 @@ import com.thomas.dahouet.utils.Calcul;
 
 public class Licencie extends Personne {
 
-	private int numeroLicence;
-	private double pointsFFV;
-	private Date dateNaissance;
-	private int anneeLicence;
+	protected int numeroLicence;
+	protected double pointsFFV;
+	protected Date dateNaissance;
+	protected int anneeLicence;
 
 	
 	
