@@ -1,12 +1,12 @@
 -- --------------------------------------------------------
 -- Hôte:                         127.0.0.1
--- Version du serveur:           5.6.12-log - MySQL Community Server (GPL)
+-- Version du serveur:           5.6.17 - MySQL Community Server (GPL)
 -- Serveur OS:                   Win64
--- HeidiSQL Version:             8.3.0.4694
+-- HeidiSQL Version:             9.1.0.4867
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
@@ -97,36 +97,35 @@ INSERT INTO `commissaires` (`ID_COMMISSAIRE`, `COM_REG`) VALUES
 -- Export de la structure de table dahouet. commission_de_course
 CREATE TABLE IF NOT EXISTS `commission_de_course` (
   `ID_COMISSION` int(11) NOT NULL AUTO_INCREMENT,
-  `ID_PRES` int(11) NOT NULL,
-  PRIMARY KEY (`ID_COMISSION`),
-  KEY `FK_commission_de_course_commissaires` (`ID_PRES`),
-  CONSTRAINT `FK_commission_de_course_commissaires` FOREIGN KEY (`ID_PRES`) REFERENCES `commissaires` (`ID_COMMISSAIRE`)
+  PRIMARY KEY (`ID_COMISSION`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- Export de données de la table dahouet.commission_de_course: ~2 rows (environ)
 DELETE FROM `commission_de_course`;
 /*!40000 ALTER TABLE `commission_de_course` DISABLE KEYS */;
-INSERT INTO `commission_de_course` (`ID_COMISSION`, `ID_PRES`) VALUES
-	(1, 21),
-	(2, 22);
+INSERT INTO `commission_de_course` (`ID_COMISSION`) VALUES
+	(1),
+	(2);
 /*!40000 ALTER TABLE `commission_de_course` ENABLE KEYS */;
 
 
 -- Export de la structure de table dahouet. fait_partie2
 CREATE TABLE IF NOT EXISTS `fait_partie2` (
-  `ID_COM` int(11) NOT NULL,
+  `ID_COMISSION` int(11) NOT NULL,
   `ID_COMMISSAIRE` int(11) NOT NULL,
   PRIMARY KEY (`ID_COMMISSAIRE`),
+  KEY `FK_fait_partie2_commission_de_course` (`ID_COMISSION`),
+  CONSTRAINT `FK_fait_partie2_commission_de_course` FOREIGN KEY (`ID_COMISSION`) REFERENCES `commission_de_course` (`ID_COMISSION`),
   CONSTRAINT `FK_fait_partie2_commissaires` FOREIGN KEY (`ID_COMMISSAIRE`) REFERENCES `commissaires` (`ID_COMMISSAIRE`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Export de données de la table dahouet.fait_partie2: ~3 rows (environ)
 DELETE FROM `fait_partie2`;
 /*!40000 ALTER TABLE `fait_partie2` DISABLE KEYS */;
-INSERT INTO `fait_partie2` (`ID_COM`, `ID_COMMISSAIRE`) VALUES
+INSERT INTO `fait_partie2` (`ID_COMISSION`, `ID_COMMISSAIRE`) VALUES
 	(1, 21),
-	(2, 22),
-	(1, 23);
+	(1, 23),
+	(2, 22);
 /*!40000 ALTER TABLE `fait_partie2` ENABLE KEYS */;
 
 
@@ -134,11 +133,12 @@ INSERT INTO `fait_partie2` (`ID_COM`, `ID_COMMISSAIRE`) VALUES
 DELIMITER //
 CREATE DEFINER=`root`@`localhost` PROCEDURE `LISTE_EQUIPAGE`(IN `id_regate` INT, IN `id_voile` INT)
 BEGIN
-select membre_d_equipage.ID_MEMBRE, membre_d_equipage.NOM_MEMBRE, membre_d_equipage.NUM_LICENCE,regate.NOM_REG,regate.DATE_REGATE,voilier.NOM_VOILE,participation.ID_SKIPPER
+select personne.ID_PERSONNE, personne.NOM_PERSONNE,personne.PRENOM_PERS, membre_d_equipage.NUM_LICENCE,regate.NOM_REG,regate.DATE_REGATE,voilier.NOM_VOILE,participation.ID_SKIPPER
 from membre_d_equipage inner join participe on membre_d_equipage.ID_MEMBRE=participe.ID_MEMBRE
 inner join participation on participe.ID_PART=participation.ID_PART
 inner join regate on participation.CODE_RE = regate.CODE_RE
 inner join voilier on participation.NUM_VOILE = voilier.NUM_VOILE
+inner join personne on personne.ID_PERSONNE = membre_d_equipage.ID_MEMBRE
 where regate.CODE_RE = id_regate and voilier.NUM_VOILE = id_voile
 order by membre_d_equipage.ID_MEMBRE asc;
 END//
@@ -149,11 +149,12 @@ DELIMITER ;
 DELIMITER //
 CREATE DEFINER=`root`@`localhost` PROCEDURE `LISTE_INTERVENTION`(IN `debut_controle` DATE, IN `fin_controle` DATE, IN `num_challenge` INT)
 BEGIN
-select regate.NOM_REG,regate.DATE_REGATE,commissaires.NOM,commissaires.COM_REG, participation.STATUT_ARRIV from
+select regate.NOM_REG,regate.DATE_REGATE,personne.NOM_PERSONNE,personne.PRENOM_PERS,commissaires.COM_REG, participation.STATUT_ARRIV from
 regate inner join commission_de_course on regate.ID_COM = commission_de_course.ID_COM
 inner join fait_partie2 on commission_de_course.ID_COM = fait_partie2.ID_COM
 inner join commissaires on fait_partie2.ID_COMMISSAIRE = commissaires.ID_COMMISSAIRE
 inner join participation on regate.CODE_RE = participation.CODE_RE
+inner join personne on personne.ID_PERSONNE = commissaires.ID_COMMISSAIRE
 where regate.DATE_REGATE between debut_controle and fin_controle 
 and regate.ID_CHALL = num_challenge
 and participation.STATUT_ARRIV is not null;
@@ -163,14 +164,14 @@ DELIMITER ;
 
 -- Export de la structure de table dahouet. membre_d_equipage
 CREATE TABLE IF NOT EXISTS `membre_d_equipage` (
-  `ID_MEMBRE` int(11) NOT NULL AUTO_INCREMENT,
+  `ID_MEMBRE` int(11) NOT NULL,
   `NUM_LICENCE` bigint(20) DEFAULT NULL,
   `ANNEE_LICENCE` int(11) DEFAULT NULL,
   `DATE_MEMBRE` date DEFAULT NULL,
   `POINTS_FFV` int(11) DEFAULT NULL,
   PRIMARY KEY (`ID_MEMBRE`),
   CONSTRAINT `FK_membre_d_equipage_personne` FOREIGN KEY (`ID_MEMBRE`) REFERENCES `personne` (`ID_PERSONNE`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Export de données de la table dahouet.membre_d_equipage: ~15 rows (environ)
 DELETE FROM `membre_d_equipage`;
@@ -338,7 +339,7 @@ CREATE TABLE IF NOT EXISTS `personne` (
   `PRENOM_PERS` varchar(20) DEFAULT NULL,
   `MAIL` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`ID_PERSONNE`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 
 -- Export de données de la table dahouet.personne: ~22 rows (environ)
 DELETE FROM `personne`;
@@ -396,7 +397,7 @@ INSERT INTO `proprietaire` (`NUM_PROPR`, `NUM_CLUB`, `ADRESSE_PROPR`, `TEL_PROPR
 CREATE TABLE IF NOT EXISTS `regate` (
   `CODE_RE` int(11) NOT NULL AUTO_INCREMENT,
   `ID_CHALL` int(11) NOT NULL,
-  `ID_COM` int(11) NOT NULL,
+  `ID_COMISSION` int(11) NOT NULL,
   `NOM_REG` varchar(20) NOT NULL,
   `DATE_REGATE` date NOT NULL,
   `DISTANCE` decimal(6,3) DEFAULT NULL,
@@ -407,22 +408,21 @@ CREATE TABLE IF NOT EXISTS `regate` (
   `ETAT_MER` varchar(10) DEFAULT NULL,
   `CAP` varchar(3) DEFAULT NULL,
   `L_BORD` decimal(6,3) DEFAULT NULL,
-  `COURUE` char(1) DEFAULT NULL,
   PRIMARY KEY (`CODE_RE`),
-  KEY `FK_regate_commission_de_course` (`ID_COM`),
+  KEY `FK_regate_commission_de_course` (`ID_COMISSION`),
   KEY `FK_regate_challenge` (`ID_CHALL`),
   CONSTRAINT `FK_regate_challenge` FOREIGN KEY (`ID_CHALL`) REFERENCES `challenge` (`ID_CHALL`),
-  CONSTRAINT `FK_regate_commission_de_course` FOREIGN KEY (`ID_COM`) REFERENCES `commission_de_course` (`ID_COMISSION`)
+  CONSTRAINT `FK_regate_commission_de_course` FOREIGN KEY (`ID_COMISSION`) REFERENCES `commission_de_course` (`ID_COMISSION`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 -- Export de données de la table dahouet.regate: ~4 rows (environ)
 DELETE FROM `regate`;
 /*!40000 ALTER TABLE `regate` DISABLE KEYS */;
-INSERT INTO `regate` (`CODE_RE`, `ID_CHALL`, `ID_COM`, `NOM_REG`, `DATE_REGATE`, `DISTANCE`, `D_VENT`, `I_VENT`, `D_COURANT`, `V_COURANT`, `ETAT_MER`, `CAP`, `L_BORD`, `COURUE`) VALUES
-	(1, 1, 1, 'ST BRIEUC ', '2015-07-12', 10.500, 'S', 15, 'E', 12, 'calme', 'NE', 3.100, 'y'),
-	(2, 1, 2, 'BREST', '2015-05-13', 12.200, 'N', 17, 'SE', 14, 'houleuse', 'S', 2.500, 'y'),
-	(3, 2, 1, 'ST BRIEUC ', '2014-11-14', 11.600, 'NO', 29, 'ONO', 13, 'agitée', 'SO', 3.200, 'n'),
-	(4, 2, 1, 'ST BRIEUC ', '2014-12-15', 13.100, 'SSE', 22, 'ESE', 16, 'houleuse', 'NNO', 1.200, 'n');
+INSERT INTO `regate` (`CODE_RE`, `ID_CHALL`, `ID_COMISSION`, `NOM_REG`, `DATE_REGATE`, `DISTANCE`, `D_VENT`, `I_VENT`, `D_COURANT`, `V_COURANT`, `ETAT_MER`, `CAP`, `L_BORD`) VALUES
+	(1, 1, 1, 'ST BRIEUC ', '2015-07-12', 10.500, 'S', 15, 'E', 12, 'calme', 'NE', 3.100),
+	(2, 1, 2, 'BREST', '2015-05-13', 12.200, 'N', 17, 'SE', 14, 'houleuse', 'S', 2.500),
+	(3, 2, 1, 'ST BRIEUC ', '2014-11-14', 11.600, 'NO', 29, 'ONO', 13, 'agitée', 'SO', 3.200),
+	(4, 2, 1, 'ST BRIEUC ', '2014-12-15', 13.100, 'SSE', 22, 'ESE', 16, 'houleuse', 'NNO', 1.200);
 /*!40000 ALTER TABLE `regate` ENABLE KEYS */;
 
 
@@ -454,7 +454,7 @@ CREATE TABLE IF NOT EXISTS `voilier` (
   KEY `FK_voilier_classe` (`NUM_CLASSE`),
   CONSTRAINT `FK_voilier_classe` FOREIGN KEY (`NUM_CLASSE`) REFERENCES `classe` (`NUM_CLASSE`),
   CONSTRAINT `FK_voilier_proprietaire` FOREIGN KEY (`NUM_PROPR`) REFERENCES `proprietaire` (`NUM_PROPR`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 -- Export de données de la table dahouet.voilier: ~5 rows (environ)
 DELETE FROM `voilier`;
