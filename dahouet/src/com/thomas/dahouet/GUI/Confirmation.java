@@ -2,6 +2,8 @@ package com.thomas.dahouet.GUI;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -16,6 +18,7 @@ public class Confirmation extends JDialog {
 	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
+	private JButton btnNewButton;
 
 	
 	public Confirmation() {
@@ -25,10 +28,18 @@ public class Confirmation extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
-		JButton btnNewButton = new JButton("Ok");
+		 btnNewButton = new JButton("Ok");
 		btnNewButton.setFont(new Font("Arial Black", Font.PLAIN, 13));
 		btnNewButton.setBounds(97, 93, 63, 23);
 		contentPanel.add(btnNewButton);
+		btnNewButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				
+			}
+		});
 		
 		JLabel lblNewLabel = new JLabel("Enregistement R\u00E9ussi");
 		lblNewLabel.setFont(new Font("Arial Black", Font.PLAIN, 13));

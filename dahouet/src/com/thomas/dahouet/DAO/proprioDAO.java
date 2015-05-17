@@ -61,13 +61,14 @@ public class proprioDAO {
 		try {
 			stm = c.createStatement();
 
-			String sql = "select club.NOM_CLUB from club";
+			String sql = "select * from club";
 			ResultSet rs = stm.executeQuery(sql);
 
 			while (rs.next()) {
-				Club club = new Club(null);
-				String s = new String(rs.getString("NOM_CLUB"));
-				club.setNomClub(s);
+				
+				int id = rs.getInt("NUM_CLUB");
+				String nom = new String(rs.getString("NOM_CLUB"));
+				Club club = new Club(id,nom);
 				clubList.add(club);
 			}
 			rs.close();
@@ -80,34 +81,10 @@ public class proprioDAO {
 		return clubList;
 
 	}
-	public static int getNumClub(Club club){
-		c = Connect.cConnect();
-		String nomClub = club.getNomClub();
-		int numSerie = 0;
-		
-		
-		Statement stm;
-		
-		try {
-			stm = c.createStatement();
-
-			String sql = "select NUM_CLUB from club where NOM_CLUB ='"+nomClub+"'";
-			ResultSet rs = stm.executeQuery(sql);
-			rs.next();
-			numSerie=rs.getInt("NUM_CLUB");
-			
-			rs.close();
-		}
-		 catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return numSerie;
-	}
 	
 	
-public static void newProprio(Proprietaire proprio, int numClub){
+	
+public static void newProprio(Proprietaire proprio, Club club){
 	 
 	Connection c = Connect.cConnect();
 	int numProprio = 0;
@@ -124,7 +101,7 @@ public static void newProprio(Proprietaire proprio, int numClub){
 	   numProprio = rs.getInt(1);
 	   stm = c.prepareStatement("insert into proprietaire(NUM_PROPR,NUM_CLUB,ADRESSE_PROPR,TEL_PROPR) VALUES(?,?,?,?)");
 	   stm.setInt(1, numProprio);
-	   stm.setInt(2, numClub);
+	   stm.setInt(2, club.getIdClub());
 	   stm.setString(3, proprio.getAdresse());
 	   stm.setLong(4, proprio.getTelephone());
 	   stm.executeUpdate();

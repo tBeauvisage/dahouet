@@ -196,6 +196,9 @@ public class NavireFrml extends JFrame {
 				Classe classe =(Classe) comboBox_2.getSelectedItem();
 				Proprietaire proprio = (Proprietaire) comboBox_3.getSelectedItem();
 				control.createVoilier(voilier, classe, proprio);
+				control.confirmInit();
+				textField.setText(null);
+				textField_1.setText(null);
 					
 				}
 			});

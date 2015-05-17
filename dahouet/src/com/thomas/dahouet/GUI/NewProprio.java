@@ -40,7 +40,7 @@ public class NewProprio extends JFrame {
 	private JTextField textField_3;
 	private JTextField textField_2;
 	private JTextField textField_4;
-	private JComboBox<String> comboBox;
+	private JComboBox<Club> comboBox;
 
 	public NewProprio() {
 
@@ -168,13 +168,13 @@ public class NewProprio extends JFrame {
 		lblNewLabel_3.setFont(new Font("Arial Black", Font.PLAIN, 13));
 		imagePanel.add(lblNewLabel_3, "cell 0 12");
 
-		comboBox = new JComboBox<String>();
+		comboBox = new JComboBox<Club>();
 		imagePanel.add(comboBox, "cell 6 12 9 1,growx");
 		ArrayList<Club> listClub = control.clubInit();
 
 		for (Club club : listClub) {
-			String nomClub = club.getNomClub();
-			comboBox.addItem(nomClub);
+			
+			comboBox.addItem(club);
 		}
 
 		Component verticalStrut_10 = Box.createVerticalStrut(20);
@@ -233,9 +233,9 @@ public class NewProprio extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Proprietaire proprio = new Proprietaire(0,textField.getText(), textField_4.getText(), textField_3.getText(), Long.parseLong(textField_2.getText()), textField_1.getText());
-				String nomClub = (String) comboBox.getSelectedItem();
-				Club club = new Club(nomClub);
+				Club club = (Club) comboBox.getSelectedItem();
 			control.createProprio(proprio,club);
+			control.confirmInit();
 			control.initNavireFrml();
 			dispose();
 				

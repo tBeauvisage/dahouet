@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.thomas.dahouet.DAO.proprioDAO;
 import com.thomas.dahouet.DAO.voilierDAO;
+import com.thomas.dahouet.GUI.Confirmation;
 import com.thomas.dahouet.GUI.NavireFrml;
 import com.thomas.dahouet.GUI.NewProprio;
 import com.thomas.dahouet.model.Classe;
@@ -22,6 +23,10 @@ public class Controller {
 	public void initNewProprio(){
 		NewProprio frame2 = new NewProprio();
 		frame2.setVisible(true);
+	}
+	public void confirmInit(){
+		Confirmation frame3 = new Confirmation();
+		frame3.setVisible(true);
 	}
 			
 	
@@ -48,9 +53,8 @@ public class Controller {
 		return listClub;
 	}
 	public void createProprio(Proprietaire proprio, Club club){
-		int numClub ;
-		numClub = proprioDAO.getNumClub(club);
-		proprioDAO.newProprio(proprio, numClub);
+		
+		proprioDAO.newProprio(proprio, club);
 	}
 	public void createVoilier (Voilier voilier,Classe classe, Proprietaire proprio){
 		
